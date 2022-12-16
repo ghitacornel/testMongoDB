@@ -1,0 +1,25 @@
+#https://www.baeldung.com/java-mongodb
+#https://dev.to/sonyarianto/how-to-spin-mongodb-server-with-docker-and-docker-compose-2lef
+
+services:
+
+  mongodb_container:
+    image: mongo:latest
+    container_name: mongodb_container
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+#  mongo-express:
+#    image: mongo-express
+#    restart: always
+#    ports:
+#      - 8081:8081
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpassword
+#      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+volumes:
+  mongodb_data_container:
