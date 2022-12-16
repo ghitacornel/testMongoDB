@@ -10,16 +10,28 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/db
+    networks:
+      - pn
 
-#  mongo-express:
-#    image: mongo-express
-#    restart: always
-#    ports:
-#      - 8081:8081
-#    environment:
-#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-#      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpassword
-#      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    links:
+      - mongodb_container
+    ports:
+      - 8081:8081
+    environment:
+      #      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      #      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpassword
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb_container:27017
+    networks:
+      - pn
 
 volumes:
   mongodb_data_container:
+
+networks:
+  pn:
+    name: pn
+    driver: bridge
